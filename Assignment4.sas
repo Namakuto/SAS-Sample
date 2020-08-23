@@ -246,13 +246,5 @@ model oralh=stopsmoking bmi drugs / dist=poisson link=log lrci;
 repeated subject=id;
 estimate "RR Good vs Poor" stopsmoking 1-1/exp;run;
 
-*** Proceed now with using the +-20% change in exposure of interest rule to assess for significant confounders.
-
-
-
-
-
-
-
-
+*** Proceed now with using the +-20% change in exposure of interest rule to assess for significant confounders.;
 
