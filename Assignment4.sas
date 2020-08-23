@@ -78,7 +78,7 @@ food bmi stopsmoking)
 				Log-Binomial Model
 ################################################*/
 
-*** Need to make dummies... ;
+/* *** Need to make dummies... ;
 data smoking.dummies; set smoking.dataoralh;
 if stopsmoking=0 then smk0=1; else smk0=0;
 if stopsmoking=1 then smk1=1;else smk1=0;
@@ -114,27 +114,24 @@ array inc(6); do i=1 to 6;
 if income=i then inc(i)=1; else inc(i)=0;
 end;drop i;
 run;
+*/
 
-
-
-
-
-*** Initial model between only 2 variables--
+/*** Initial model between only 2 variables--
 stopsmoking not significant... model convergence.
-Overall beta of stopsmoking= -0.0561... ;
+Overall beta of stopsmoking= -0.0561... ;*/
 proc genmod data=smoking.dummies descending;
 class oralh (param=ref ref="Poor")
 stopsmoking (ref="< 1 year");
 model oralh=stopsmoking/ dist=bin link=log lrci;
 estimate "RR Good vs Poor" stopsmoking 1-1/exp;run;
 
-*** check if oralh differs by levels of the exposure--
+/*** check again if oralh differs by levels of the exposure--
 i.e., perhaps we need dummies? Chisq not significant,
-however....;
+however....;*/
 proc freq data=smoking.dummies;
 tables oralh*stopsmoking/ chisq; run;
-*** We will just leave the stopsmoking variable as 
-is, for now;
+/*** We will just leave the stopsmoking variable as 
+is, for now;*/
 
 
 
@@ -156,9 +153,9 @@ estimate "RR Good vs Poor" age 1-1/exp;run;
 *** still not significant. Try checking again for changes in oralh over age: ;
 proc freq data=smoking.dummies;
 tables oralh*age/ chisq; run;
-*** some dif in oralh by age groups. Let's try collapsing categories. As age naturally has 16 levels
+/*** some dif in oralh by age groups. Let's try collapsing categories. As age naturally has 16 levels
 (and a high number of observations per level), we could technically try dividing into 4 levels. But
-for simplicity's sake, we will just try dichotomizing this variable and see what happens. ;
+for simplicity's sake, we will just try dichotomizing this variable and see what happens. ;*/
 data smoking.dummies2; set smoking.dummies; 
 if age<=8 then age_bin = 0; 
 else if age>8 then age_bin = 1;
@@ -168,8 +165,8 @@ class oralh (param=ref ref="Poor")
 age_bin (ref="0");
 model oralh=age_bin/ dist=bin link=log lrci;
 estimate "RR Good vs Poor" age_bin 1-1/exp;run;
-** Still not significant but now algorithm converged. Hmm let's examine the association between 
-the original 16 levels of age with the exposure.; 
+/** Still not significant but now algorithm converged. Hmm let's examine the association between 
+the original 16 levels of age with the exposure.; */
 
 
 
@@ -249,8 +246,7 @@ model oralh=stopsmoking bmi drugs / dist=poisson link=log lrci;
 repeated subject=id;
 estimate "RR Good vs Poor" stopsmoking 1-1/exp;run;
 
-
-*** Proceed now with testing removal of variables high highest p-value. Use LR-test in-between;
+*** Proceed now with using the +-20% change in exposure of interest rule to assess for significant confounders.
 
 
 
