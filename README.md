@@ -1,6 +1,5 @@
-## Sample of SAS work
-
-#### This is a placeholder ReadMe in case I want to write something else here.
+## Multivariate Log-binomial (and Poisson) Regression between Years since Quitting Smoking and Self-reported Oral Health 
+### A Sample of Work in SAS  
 ---
 This folder contains a .pdf copy of my analysis of a subset of Candian Community Health Survey (CCHS) data from 2015-2016. The analysis is based on an assignment I did in graduate school, but I went back to fix a couple things and reduce some of my code.
 
